@@ -9,7 +9,8 @@ import type { StreamType } from 'providers/utils/stream-type';
 import type { GenericObject, TextTrackLike, Localization } from 'types/generic.type';
 import type { QualityLevel } from 'providers/data-normalizer';
 import type PlaylistItem from 'playlist/item';
-import type { ImplementedProvider } from 'providers/default';
+import type { ImplementedProvider, SeekRange } from 'providers/default';
+import type { SimpleAudioTrack } from 'providers/tracks-mixin';
 
 type AutoStart = boolean | 'viewable';
 export type PauseReason = 'external' | 'interaction' | 'viewable';
@@ -332,12 +333,18 @@ function syncPlayerWithMediaModel(mediaModel: MediaModel): void {
 }
 
 export type MediaModelAttributes = {
+    audioTracks?: SimpleAudioTrack[];
     buffer: number;
+    currentAudioTrack?: number;
+    currentLevel?: number;
     currentTime: number;
     duration: number;
+    levels?: { label: string }[];
     mediaState: InternalPlayerState;
+    mediaType?: 'video' | 'audio';
     position: number;
     preloaded: boolean;
+    seekRange?: SeekRange;
     setup: boolean;
     started: boolean;
     visualQuality: GenericObject | null;
